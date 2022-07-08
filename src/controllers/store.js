@@ -7,7 +7,6 @@ const Address = db.Address;
 const Order = db.Order;
 const OrderDetail = db.OrderDetail;
 const Product = db.Product;
-const ProductTier = db.ProductTier;
 const Tier = db.Tier;
 const Universe = db.Universe;
 const User = db.User;

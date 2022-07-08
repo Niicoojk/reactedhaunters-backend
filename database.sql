@@ -16,7 +16,7 @@ CREATE TABLE `tiers`(
 
 CREATE TABLE `products`(
 	`product_id` SMALLINT(10) AUTO_INCREMENT PRIMARY KEY,
-	`universe` SMALLINT(10) NOT NULL,
+	`universe_id` SMALLINT(10) NOT NULL,
 	`tier_id` SMALLINT(6) NOT NULL,
 	`name` VARCHAR(100) NOT NULL,
 	`short_desc` VARCHAR(255) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE `products`(
 	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 	`deleted` TINYINT(1) DEFAULT 0 NOT NULL,
-	FOREIGN KEY (`universe`) REFERENCES universes(`universe_id`),
+	FOREIGN KEY (`universe_id`) REFERENCES universes(`universe_id`),
 	FOREIGN KEY (`tier_id`) REFERENCES tiers(`tier_id`)
 ) ENGINE=INNODB;
 
@@ -107,9 +107,7 @@ INSERT INTO `universes` (`universe`) VALUES ('Pokemon'),('Dragon Ball'),('Marvel
 
 INSERT INTO `tiers` (`value`) VALUES ('Common'),('Uncommon'),('Rare'),('Epic'),('Legendary');
 
-INSERT INTO `products`(`universe`,`name`,`short_desc`,`long_desc`,`created_at`,`updated_at`) VALUES ('1','Pikachu Gorra','Un fiel compañero Pokemon de tipo eléctrico.', 'Un fiel compañero Pokemon de tipo eléctrico, el cuál es el compañero del protagonista del anime, Ash Ketchup, y lo podemos ver con la gorra del mismo en la imágen de esta edición especial de lanzamiento la tarjeta.','2022/03/10 15:53:10','2022/03/10 15:53:10');
-
-INSERT INTO `product_tier` (`product_id`, `tier_id`, `price`, `image`, `created_at`, `updated_at`) VALUES ('1','5','99.99','/img/pokemon/5/pikachugorra.png','2022/03/10 15:53:10','2022/03/10 15:53:10');
+INSERT INTO `products`(`universe_id`, `tier_id`,`name`,`short_desc`,`long_desc`,`price`,`image`,`created_at`,`updated_at`) VALUES ('1','5','Pikachu Gorra','Un fiel compañero Pokemon de tipo eléctrico.', 'Un fiel compañero Pokemon de tipo eléctrico, el cuál es el compañero del protagonista del anime, Ash Ketchup, y lo podemos ver con la gorra del mismo en la imágen de esta edición especial de lanzamiento la tarjeta.','99.99','/img/pokemon/5/pikachugorra.png','2022/03/10 15:53:10','2022/03/10 15:53:10');
 
 INSERT INTO `users` ( `admin`, `first_name`, `last_name`, `user_name`, `email`, `password`, `image`, `terms_conditions`, `email_send`, `deleted`) VALUES ( '1', 'Admin', 'Istrator', 'Administrator', 'administrator@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Nicolás', 'Barragán', 'NicoB', 'nicobarragan@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Diego', 'Giraldo', 'DiegoG', 'diegogiraldo@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Matias', 'Torres Contreras', 'MatiTC', 'matiastc@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Anthony', 'Micha', 'AnthonyM', 'anthonymicha@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('0', 'Jose', 'Argento', 'PepeArgento', 'pepeargento@gmail.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/1656765208541-pepeargento.png', '1', '0', '0');
 -- La contraseña de los usuarios por defecto es hola1234
