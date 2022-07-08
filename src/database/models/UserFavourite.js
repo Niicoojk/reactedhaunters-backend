@@ -33,7 +33,7 @@ module.exports = (sequelize, dataTypes) => {
 	};
 
 	UserFavourite.associate = (models) => {
-		UserFavourite.hasMany(models.ProductTier, {
+		UserFavourite.hasMany(models.Product, {
 			as: "product_favourites",
 			foreignKey: "product_id",
 		});

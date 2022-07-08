@@ -24,8 +24,8 @@ module.exports = (sequelize, dataTypes) => {
 	let config = {
 		tableName: "orders",
 		timestamps: true,
-		createdAt: false,
-		updatedAt: false,
+		createdAt: "created_at",
+		updatedAt: "updated_at",
 	};
 
 	let Order = sequelize.define(alias, cols, config);

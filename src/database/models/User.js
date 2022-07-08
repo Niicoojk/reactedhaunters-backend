@@ -59,8 +59,8 @@ module.exports = (sequelize, dataTypes) => {
 	let config = {
 		tableName: "users",
 		timestamps: true,
-		createdAt: false,
-		updatedAt: false,
+		createdAt: "created_at",
+		updatedAt: "updated_at",
 	};
 
 	const User = sequelize.define(alias, cols, config);
@@ -72,20 +72,22 @@ module.exports = (sequelize, dataTypes) => {
 		});
 	};
 
-	User.associate = function (models) {
-		User.belongsToMany(models.ProductTier, {
-			through: "user_collection",
-			as: "collection",
-			foreignKey: "user_id",
-			otherKey: "product_id",
-			timestamps: true,
-		});
-	};
-
 	User.associate = (models) => {
 		User.belongsTo(models.UserFavourite, {
 			as: "user_favourites",
 			foreignKey: "user_id",
+		});
+	};
+
+	User.associate = function (models) {
+		User.belongsToMany(models.Product, {
+			through: "belongings",
+			as: "belongs",
+			foreignKey: "user_id",
+			otherKey: "product_id",
+			timestamps: true,
+			createdAt: "created_at",
+			updatedAt: "updated_at",
 		});
 	};
 

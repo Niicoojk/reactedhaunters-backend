@@ -56,14 +56,14 @@ CREATE TABLE `addresses`(
 	`floor` SMALLINT(10) DEFAULT 0,
 	`apartment` SMALLINT(10) DEFAULT 0,
 	`postal_code` SMALLINT(10) NOT NULL,
-	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	`updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 ) ENGINE=INNODB;
 
 CREATE TABLE `users_addresses` (
 	`user_address_id` SMALLINT(12) AUTO_INCREMENT PRIMARY KEY,
 	`user_id` SMALLINT(10) NOT NULL,
 	`address_id` SMALLINT(12) NOT NULL,
+	`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	`updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 	`deleted` SMALLINT(1) DEFAULT 0 NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
 	FOREIGN KEY (`address_id`) REFERENCES addresses(`address_id`)
@@ -80,11 +80,11 @@ CREATE TABLE `orders`(
 CREATE TABLE `order_details`(
 	`order_id` SMALLINT(12) NOT NULL,
 	`order_detail_id` SMALLINT(14) NOT NULL,
-	`product_tier_id` SMALLINT(12) NOT NULL,
+	`product_id` SMALLINT(12) NOT NULL,
 	`quantity` SMALLINT(8) NOT NULL DEFAULT 1,
 	`amount` FLOAT NOT NULL,
 	FOREIGN KEY (`order_id`) REFERENCES orders(`order_id`),
-	FOREIGN KEY (`product_tier_id`) REFERENCES product_tier(`product_tier_id`)
+	FOREIGN KEY (`product_id`) REFERENCES products(`product_id`)
 ) ENGINE=INNODB;
 
 CREATE TABLE `user_favourites`(

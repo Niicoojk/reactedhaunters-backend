@@ -38,22 +38,10 @@ module.exports = (sequelize, dataTypes) => {
 			type: dataTypes.INTEGER(10),
 			allowNull: false,
 		},
-		created_at: {
-			type: dataTypes.DATE(6),
-			default: dataTypes.NOW,
-			allowNull: false,
-		},
-		updated_at: {
-			type: dataTypes.DATE(6),
-			default: dataTypes.NOW,
-			allowNull: false,
-		},
 	};
 	let config = {
 		tableName: "addresses",
-		timestamps: true,
-		createdAt: false,
-		updatedAt: false,
+		timestamps: false,
 	};
 
 	const Address = sequelize.define(alias, cols, config);

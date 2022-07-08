@@ -11,7 +11,7 @@ module.exports = (sequelize, dataTypes) => {
 			primaryKey: true,
 			allowNull: false,
 		},
-		product_tier_id: {
+		product_id: {
 			type: dataTypes.INTEGER(12),
 			allowNull: false,
 		},
@@ -34,15 +34,15 @@ module.exports = (sequelize, dataTypes) => {
 
 	OrderDetail.associate = (models) => {
 		OrderDetail.hasMany(models.Order, {
-			as: "order_details",
+			as: "order_detail",
 			foreignKey: "order_id",
 		});
 	};
 
 	OrderDetail.associate = (models) => {
-		OrderDetail.hasMany(models.ProductTier, {
-			as: "order_products",
-			foreignKey: "product_tier_id",
+		OrderDetail.hasMany(models.Product, {
+			as: "ordered_product",
+			foreignKey: "product_id",
 		});
 	};
 

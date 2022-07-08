@@ -15,10 +15,27 @@ module.exports = (sequelize, dataTypes) => {
 			type: dataTypes.INTEGER(12),
 			allowNull: false,
 		},
+		created_at: {
+			type: dataTypes.DATE(6),
+			default: dataTypes.NOW,
+			allowNull: false,
+		},
+		updated_at: {
+			type: dataTypes.DATE(6),
+			default: dataTypes.NOW,
+			allowNull: false,
+		},
+		deleted: {
+			type: dataTypes.BOOLEAN,
+			default: 0,
+			allowNull: false,
+		},
 	};
 	let config = {
 		tableName: "users_addresses",
-		timestamps: false,
+		timestamps: true,
+		createdAt: "created_at",
+		updatedAt: "updated_at",
 	};
 
 	const UserAddress = sequelize.define(alias, cols, config);

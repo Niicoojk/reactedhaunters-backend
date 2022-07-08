@@ -22,7 +22,7 @@ module.exports = (sequelize, dataTypes) => {
 	const Tier = sequelize.define(alias, cols, config);
 
 	Tier.associate = function (models) {
-		Tier.belongsTo(models.ProductTier, {
+		Tier.belongsTo(models.Product, {
 			as: "tiers",
 			foreignKey: "tier_id",
 		});

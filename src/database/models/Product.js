@@ -19,7 +19,7 @@ module.exports = (sequelize, dataTypes) => {
 			type: dataTypes.STRING,
 			allowNull: false,
 		},
-		tier: {
+		tier_id: {
 			type: dataTypes.INTEGER(10),
 			allowNull: false,
 		},
@@ -42,23 +42,40 @@ module.exports = (sequelize, dataTypes) => {
 	let config = {
 		tableName: "products",
 		timestamps: true,
-		createdAt: false,
-		updatedAt: false,
+		createdAt: "created_at",
+		updatedAt: "updated_at",
 	};
 
 	const Product = sequelize.define(alias, cols, config);
 
 	Product.associate = function (models) {
-		Product.belongsTo(models.ProductTier, {
-			as: "productVariants",
+		Product.hasMany(models.Tier, {
+			as: "tiers",
+			foreignKey: "tier_id",
+		});
+	};
+
+	Product.associate = (models) => {
+		Product.belongsTo(models.OrderDetail, {
+			as: "ordered_product",
+			foreignKey: "product_id",
+		});
+	};
+
+	Product.associate = (models) => {
+		Product.belongsTo(models.UserFavourite, {
+			as: "product_favourites",
 			foreignKey: "product_id",
 		});
 	};
 
 	Product.associate = function (models) {
-		Product.belongsTo(models.OrderDetail, {
-			as: "order_detail",
+		Product.belongsToMany(models.User, {
+			through: "belongings",
+			as: "belongs",
 			foreignKey: "product_id",
+			otherKey: "user_id",
+			timestamps: false,
 		});
 	};
 
