@@ -90,17 +90,17 @@ CREATE TABLE `order_details`(
 CREATE TABLE `user_favourites`(
 	`user_favourite_id` SMALLINT(12) AUTO_INCREMENT PRIMARY KEY,
 	`user_id` SMALLINT(10) NOT NULL,
-	`product_tier_id` SMALLINT(10) NOT NULL,
+	`product_id` SMALLINT(10) NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
-	FOREIGN KEY (`product_tier_id`) REFERENCES product_tier(`product_tier_id`)
+	FOREIGN KEY (`product_id`) REFERENCES products(`product_id`)
 )	ENGINE=INNODB;
 
 CREATE TABLE `belongings`(
 	`belonging_id` SMALLINT(12) AUTO_INCREMENT PRIMARY KEY,
 	`user_id` SMALLINT(10) NOT NULL,
-	`product_tier_id` SMALLINT(10) NOT NULL,
+	`product_id` SMALLINT(10) NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES users(`user_id`),
-	FOREIGN KEY (`product_tier_id`) REFERENCES product_tier(`product_tier_id`)
+	FOREIGN KEY (`product_id`) REFERENCES products(`product_id`)
 ) ENGINE=INNODB;
 
 INSERT INTO `universes` (`universe`) VALUES ('Pokemon'),('Dragon Ball'),('Marvel');
