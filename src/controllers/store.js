@@ -22,42 +22,36 @@ const controller = {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	productCreate: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	productDetail: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	productDelete: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	productFind: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	tierList: async (req, res) => {
 		let status = res.statusCode;
 		let validationResults = validationResult(req);
 		try {
-			let { user } = req.session;
 			let tiers = await Tier.findAll({
 				order: [["tier_id", "ASC"]],
 			});
@@ -77,7 +71,6 @@ const controller = {
 		let validationResults = validationResult(req);
 		let status = res.statusCode;
 		try {
-			let { user } = req.session;
 			let universe = await Universe.findAll({
 				order: [["universe_id", "ASC"]],
 			});
@@ -97,14 +90,12 @@ const controller = {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	universeCreate: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 };

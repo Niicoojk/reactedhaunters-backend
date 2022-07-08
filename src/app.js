@@ -2,7 +2,6 @@
 const path = require("path");
 const express = require("express");
 const methodOverride = require("method-override");
-const session = require("express-session");
 
 // Setting APP and PORT
 const app = express();
@@ -20,13 +19,6 @@ app.use(methodOverride("_method"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(
-	session({
-		secret: "Aguante McLovin",
-		resave: false,
-		saveUninitialized: false,
-	})
-);
 
 // Middlewares generales de la app
 app.use((req, res, next) => {

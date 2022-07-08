@@ -23,7 +23,6 @@ const controller = {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 			let users = await User.findAll();
 			res.status(200).json({
 				total: users.length,
@@ -38,10 +37,55 @@ const controller = {
 		}
 	},
 	login: async (req, res) => {
+		let status = res.statusCode;
 		let validationResults = validationResult(req);
+		let passwordVerify = (password, passwordDatabase) => {
+			let compared = bcrypt.compareSync(password, passwordDatabase);
+			return compared;
+		};
 		try {
-			let {} = req.body;
-			let { user } = req.session;
+			let { login_key, password } = req.body;
+			let containsAt = login_key.includes("@");
+			if (containsAt) {
+				let userToLog = await User.findOne({ where: { email: login_key } });
+				if (userToLog) {
+					let passwordOk = passwordVerify(password, userToLog.password);
+					if (passwordOk) {
+						delete userToLog.password;
+						res.json({
+							status: status,
+							user: userToLog,
+						});
+					}
+				} else {
+					res.status(400).json({
+						status: 400,
+						errors: validationResults.mapped(),
+					});
+				}
+			} else if (!containsAt) {
+				let userToLog = await User.findOne({ where: { user_name: login_key } });
+				if (userToLog) {
+					let passwordOk = passwordVerify(password, userToLog.password);
+					if (passwordOk) {
+						delete userToLog.password;
+						res.json({
+							status: status,
+							user: userToLog,
+						});
+					}
+				} else {
+					res.status(400).json({
+						status: 400,
+						errors: validationResults.mapped(),
+					});
+				}
+			} else {
+				res.status(400).json({
+					status: 400,
+					errors: validationResults.mapped(),
+				});
+			}
 		} catch (error) {}
 	},
 	register: async (req, res) => {
@@ -87,7 +131,7 @@ const controller = {
 				});
 				res.status(200).json({
 					status: 200,
-					userData: user,
+					newUser: user,
 				});
 			}
 		} catch (error) {
@@ -102,56 +146,48 @@ const controller = {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	userUpdate: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	collectionAdd: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	collectionDelete: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	collectionList: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	favouritesAdd: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	favouritesDelete: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 	favouritesList: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {}
 	},
 };

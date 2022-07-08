@@ -20,11 +20,15 @@ const validations = [
 	body("first_name")
 		.notEmpty()
 		.withMessage("Debes completar este campo.")
-		.bail(),
+		.bail()
+		.isAlpha()
+		.withMessage("Solo se admiten letras."),
 	body("last_name")
 		.notEmpty()
 		.withMessage("Debes completar este campo.")
-		.bail(),
+		.bail()
+		.isAlpha()
+		.withMessage("Solo se admiten letras."),
 	body("user_name")
 		.notEmpty()
 		.withMessage("Debes completar este campo.")

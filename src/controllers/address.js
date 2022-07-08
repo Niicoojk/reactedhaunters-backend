@@ -24,7 +24,6 @@ const controller = {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 			let userAddresses = await UserAddress.findAll({
 				where: {
 					user_id: user.id,
@@ -55,7 +54,6 @@ const controller = {
 		try {
 			let { country, state, city, address, floor, apartment, postal_code } =
 				req.body;
-			let { user } = req.session;
 			let addressRegistered = await Address.findOne({
 				where: {
 					country: country,
@@ -111,7 +109,6 @@ const controller = {
 		try {
 			let { country, state, city, address, floor, apartment, postal_code } =
 				req.body;
-			let { user } = req.session;
 			let addressRegistered = await Address.findOne({
 				where: {
 					country: country,
@@ -143,7 +140,6 @@ const controller = {
 		let validationResults = validationResult(req);
 		try {
 			let {} = req.body;
-			let { user } = req.session;
 		} catch (error) {
 			consoleLogError(error);
 			res.status(400).json({
