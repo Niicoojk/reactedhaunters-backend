@@ -1,34 +1,64 @@
 // Requiring Libraries
+const fs = require("fs/promises");
 const path = require("path");
 const express = require("express");
 const methodOverride = require("method-override");
+const session = require("express-session");
 
 // Setting APP and PORT
 const app = express();
 const PORT = process.env.PORT || 3030;
 
-// Setting Routes
-const routesAddress = require("./routes/address");
+// Requiring Routes
+const routesAddress = require("./routes/api/address");
 const routesStore = require("./routes/store");
 const routesUser = require("./routes/user");
 
+// Requiring Api Routes
+const routesApiAddress = require("./routes/api/address");
+const routesApiStore = require("./routes/api/store");
+const routesApiUser = require("./routes/api/user");
+
 // Settings
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.set("views", path.join(__dirname, "/views"));
+app.use(express.static(path.join(__dirname, "/../public")));
 app.use(methodOverride("_method"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Middlewares generales de la app
-app.use((req, res, next) => {
+// General Middlewares
+app.use(
+	session({
+		secret: "secret",
+		resave: false,
+		saveUninitialized: false,
+	})
+);
+app.use(async (req, res, next) => {
+	let dateNow = new Date();
+	let hh = dateNow.getHours();
+	let mn = dateNow.getMinutes();
+	let ss = dateNow.getSeconds();
+	let ms = dateNow.getMilliseconds();
+
+	let time = "[" + hh + ":" + mn + ":" + ss + "." + ms + "]";
+
+	await fs.appendFile(
+		path.join(__dirname, "/logs/console.txt"),
+		`${time} In ${req.socket.remoteAddress}:${PORT}${req.url} used ${req.method}\n`
+	);
 	console.log(
-		`In ${req.socket.remoteAddress}:${PORT}${req.url} used ${req.method}`
+		`${time} In ${req.socket.remoteAddress}:${PORT}${req.url} used ${req.method}`
 	);
 	next();
 });
 
 // Routes
+app.use("/api/address", routesApiAddress);
+app.use("/api/store", routesApiStore);
+app.use("/api/user", routesApiUser);
 app.use("/address", routesAddress);
 app.use("/store", routesStore);
 app.use("/user", routesUser);
@@ -39,5 +69,6 @@ app.use((req, res, next) => {
 
 // Start Server
 app.listen(PORT, () => {
+	console.clear();
 	console.log(`Server is running on port ${PORT}`);
 });

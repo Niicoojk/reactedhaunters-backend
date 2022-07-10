@@ -1,6 +1,6 @@
 // Requiring Libraries & Database
 const { body } = require("express-validator");
-const db = require("../../database/models");
+const db = require("../../../database/models");
 const path = require("path");
 
 // Placing abbreviations of Models
@@ -8,7 +8,6 @@ const Address = db.Address;
 const Order = db.Order;
 const OrderDetail = db.OrderDetail;
 const Product = db.Product;
-const ProductTier = db.ProductTier;
 const Tier = db.Tier;
 const Universe = db.Universe;
 const User = db.User;
@@ -32,13 +31,41 @@ const validations = [
 	body("user_name")
 		.notEmpty()
 		.withMessage("Debes completar este campo.")
-		.bail(),
+		.bail()
+		.isLength({ max: 16 })
+		.withMessage("El nombre de usuario debe tener menos de 16 caracteres.")
+		.bail()
+		.custom(async (value, { req }) => {
+			let alreadyExist = await User.findOne({
+				where: {
+					user_name: value,
+				},
+			});
+			if (alreadyExist) {
+				throw new Error("Este nombre de usuario está en uso.");
+			} else {
+				return true;
+			}
+		}),
 	body("email")
 		.notEmpty()
 		.withMessage("Debes completar este campo.")
 		.bail()
 		.isEmail()
-		.withMessage("Debes escribir un correo válido."),
+		.withMessage("Debes escribir un correo válido.")
+		.bail()
+		.custom(async (value, { req }) => {
+			let alreadyExist = await User.findOne({
+				where: {
+					email: value,
+				},
+			});
+			if (alreadyExist) {
+				throw new Error("Este email ya está asociado a un usuario.");
+			} else {
+				return true;
+			}
+		}),
 	body("password")
 		.notEmpty()
 		.withMessage("Debes completar este campo.")
@@ -73,14 +100,12 @@ const validations = [
 		}
 		return true;
 	}),
-	body("terms_conditions")
-		.notEmpty()
-		.withMessage("Debes completar este campo.")
-		.bail()
-		.isNumeric({ min: 1 })
-		.withMessage(
-			"Los términos y condiciones deben ser aceptados para poder registarse."
-		),
+	body("terms_conditions").custom((value, { req }) => {
+		if (value != "on") {
+			throw new Error("Debes aceptar los términos y condiciones.");
+		}
+		return true;
+	}),
 ];
 
 module.exports = validations;

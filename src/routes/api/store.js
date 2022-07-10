@@ -4,10 +4,10 @@ const multer = require("multer");
 const path = require("path");
 
 // Requiring Controller, Middlewares & Scripts
-const controller = require("../controllers/store");
-const adminHandler = require("../middlewares/handlers/adminHandler");
+const controller = require("../../controllers/api/store");
+const adminHandler = require("../../middlewares/handlers/adminHandler");
 
-const formattedDate = require("../scripts/formattedDate");
+const formattedDate = require("../../scripts/formattedDate");
 
 // Setting Multer
 const storage = multer.diskStorage({
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 			null,
 			path.join(
 				__dirname,
-				"/../../public/images/products/",
+				"/../../../public/images/products/",
 				req.body.universe,
 				"/",
 				req.body.tier

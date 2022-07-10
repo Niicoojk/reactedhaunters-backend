@@ -1,5 +1,5 @@
 // Requiring Libraries
-const db = require("../database/models");
+const db = require("../../database/models");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
@@ -14,8 +14,8 @@ const User = db.User;
 const UserAddress = db.UserAddress;
 
 // Requiring Scripts & Declaring Variables
-const formattedDateDb = require("../scripts/formattedDateDb");
-const consoleLogError = require("../scripts/consoleLogError");
+const formattedDateDb = require("../../scripts/formattedDateDb");
+const consoleLogError = require("../../scripts/consoleLogError");
 
 // Troll Responses at Password
 let random = () => {
@@ -35,6 +35,23 @@ let passwordResponses = [
 
 // Defining Controller
 const controller = {
+	list: async (req, res) => {
+		let validationResults = validationResult(req);
+		try {
+			let {} = req.body;
+			let users = await User.findAll();
+			res.status(200).json({
+				total: users.length,
+				data: users,
+				status: 200,
+			});
+		} catch (error) {
+			consoleLogError(error);
+			res.status(400).json({
+				errors: validationResults.mapped(),
+			});
+		}
+	},
 	login: async (req, res) => {
 		let status = res.statusCode;
 		let validationResults = validationResult(req);
