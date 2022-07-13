@@ -1,0 +1,47 @@
+<%- include("../partials/head") %> <%- include("../partials/header") %>
+
+<main class="card">
+  <section class="card-1">
+    <div class="product">
+      <figure>
+        <img src="/img/products/<%=produc.img%>" alt="Mewtwo" />
+      </figure>
+      <div class="producDetails">
+        <a href=""><%= produc.name %> </a>
+        <p><%= produc.shortDesc %></p>
+        <p><%= produc.universe %></p>
+      </div>
+    </div>
+    <div class="buy">
+      
+        <div class="buy-option">
+          <h5><%= produc.price %></h5>
+          <select name="" id="">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        <div class="button">
+          <button>Comprar</button>
+          <a href="/store/editProduct/<%= produc.id %> "> Editar </a>
+          <form
+            action="/store/productDetails/<%= produc.id %>/delete?_method=DELETE"
+            method="POST"
+          >
+            <button type="submit">Eliminar</button>
+          </form>
+        </div>
+      
+    </div>
+  </section>
+  <section>
+    <div class="description">
+      <p><%= produc.longDesc %></p>
+    </div>
+  </section>
+</main>
+
+<%- include("../partials/footer") %>

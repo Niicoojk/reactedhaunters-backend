@@ -1,0 +1,69 @@
+<%- include ("../partials/head") %>
+<%- include ("../partials/headerUserForm")
+
+<main>
+  <form method="POST" enctype="multipart/form-data">
+    <input 
+    type="text" 
+    name="first_name" 
+    id="first_name"
+    placeholder="Ingrese su nombre"
+    <% if (locals.old) { %>
+     value="<%= req.old.first_name %>"
+    <% } %>
+    >
+    <input 
+    type="text" 
+    name="last_name" 
+    id="last_name"
+    placeholder="Ingrese su apellido"
+    <% if (locals.old) { %>
+     value="<%= req.old.last_name %>"
+    <% } %>
+    >
+    <input 
+    type="email" 
+    name="email" 
+    id="email"
+    placeholder="Ingrese su e-mail"
+    <% if (locals.old) { %>
+     value="<%= req.old.email %>"
+    <% } %>
+    >
+    
+    <input type="file" name="image" id="image">
+    
+    <div id="overlay">
+      <div id="popup">
+        <div id="confirmation" class="hidden">
+          <input 
+          type="text" 
+          name="user_name" 
+          id="user_name"
+          placeholder="Ingrese su nombre de usuario"
+          <% if (locals.old) { %>
+           value="<%= req.old.user_name %>"
+          <% } %>
+          >
+          <input 
+          type="password" 
+          name="password" 
+          id="password"
+          placeholder="Ingrese su contraseña"
+          <% if (locals.old) { %>
+           value="<%= req.old.password %>"
+          <% } %>
+          >
+    
+          <button formaction="/user/update">
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+    <button id="prevSubmit">
+      Guardar Cambios 
+    </button>
+  </form>
+  <script src="/js/updateForms.js"></script>
+</main>

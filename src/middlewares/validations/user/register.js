@@ -81,7 +81,7 @@ const validations = [
 			"La contraseña debe contener al menos 8 caracteres, una minúscula, una mayúscula, un número y un símbolo."
 		),
 	body("repeatedPassword").custom((value, { req }) => {
-		if (value != req.body.password) {
+		if (value !== req.body.password) {
 			throw new Error("Las contraseñas no coinciden.");
 		}
 		return true;

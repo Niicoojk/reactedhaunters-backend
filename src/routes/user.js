@@ -5,8 +5,8 @@ const path = require("path");
 
 // Requiring Controller, Middlewares & Scripts
 const controller = require("../controllers/user");
-const validationLogIn = require("../middlewares/validations/user/validationsLogIn");
-const validationRegister = require("../middlewares/validations/user/validationsRegister");
+const validationLogIn = require("../middlewares/validations/user/logIn");
+const validationRegister = require("../middlewares/validations/user/register");
 
 const guestHandler = require("../middlewares/handlers/guestHandler");
 const loggedHandler = require("../middlewares/handlers/loggedHandler");
@@ -29,10 +29,16 @@ const storage = multer.diskStorage({
 const router = express.Router();
 
 // User Main Routes
+router.get("/login", controller.signIn);
 router.post("/login", validationLogIn, controller.login);
+router.get("/register", controller.signUp);
 router.post("/register", validationRegister, controller.register);
-router.post("/:id/update", controller.userUpdate);
-router.post("/:id/delete", controller.userDelete);
+
+// Update & Delete User Routes
+router.get("/update", loggedHandler, controller.userUpdate);
+router.post("/update", loggedHandler, controller.userUpdated);
+router.get("/delete", loggedHandler, controller.userDelete);
+router.post("/delete", loggedHandler, controller.userDeleted);
 
 // Favourites
 router.get("/:id/favourites", controller.favouritesList);

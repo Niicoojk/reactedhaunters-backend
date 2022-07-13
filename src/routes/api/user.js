@@ -5,8 +5,9 @@ const path = require("path");
 
 // Requiring Controller, Middlewares & Scripts
 const controller = require("../../controllers/api/user");
-const validationLogIn = require("../../middlewares/validations/user/validationsLogIn");
-const validationRegister = require("../../middlewares/validations/user/validationsRegister");
+const validationLogIn = require("../../middlewares/validations/user/logIn");
+const validationRegister = require("../../middlewares/validations/user/register");
+const validationUpdate = require("../../middlewares/validations/user/update");
 
 const guestHandler = require("../../middlewares/handlers/guestHandler");
 const loggedHandler = require("../../middlewares/handlers/loggedHandler");
@@ -32,17 +33,19 @@ const router = express.Router();
 router.get("/", controller.list);
 router.post("/login", validationLogIn, controller.login);
 router.post("/register", validationRegister, controller.register);
-router.post("/:id/update", controller.userUpdate);
-router.post("/:id/delete", controller.userDelete);
+
+// Update || Delete Routes
+router.post("/update", validationUpdate, controller.userUpdate);
+router.post("/delete", controller.userDelete);
 
 // Favourites
-router.get("/:id/favourites", controller.favouritesList);
-router.post("/:id/favouriteAdd", controller.favouritesAdd);
-router.post("/:id/favouriteDelete", controller.favouritesDelete);
+router.get("/favourites", controller.favouritesList);
+router.post("/favouriteAdd", controller.favouritesAdd);
+router.post("/favouriteDelete", controller.favouritesDelete);
 
 // User Collection
-router.get("/:id/collection", controller.collectionList);
-router.post("/:id/collectionAdd", controller.collectionAdd);
-router.post("/:id/collectionDelete", controller.collectionDelete);
+router.get("/collection", controller.collectionList);
+router.post("/collectionAdd", controller.collectionAdd);
+router.post("/collectionDelete", controller.collectionDelete);
 
 module.exports = router;

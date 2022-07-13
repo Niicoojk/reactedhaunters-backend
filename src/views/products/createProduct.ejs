@@ -1,0 +1,130 @@
+<%- include('../partials/head') %>
+  <%- include('../partials/header') %>
+    <main>
+      <div>
+        <form action="createProduct" method="post" enctype="multipart/form-data">
+          <h3>Formulario de creacion de producto</h3>
+
+          <div class="formulario">
+            <div class="description">
+              <input type="text" 
+                name="name" 
+                id="name" 
+                class="drawer"  
+                placeholder="Nombre del producto"
+                class="<%= locals.errors && errors.name ? 'drawer-red':'drawer' %> "
+                <% if (locals.oldDate && oldDate.name) { %>
+                  value=' <%= oldDate.name %>  ' 
+                <% } %> 
+              />
+              <% if (locals.errors && errors.name) { %>
+                <%= errors.name.msg %> 
+              <% } %> 
+
+            </div>
+
+            <div class="description">
+              <input type="number"
+                name="price" 
+                id="price" 
+                class="drawer" 
+                placeholder="Precio del producto" 
+                class=" <%= locals.errors && errors.price ? 'drawer-red' : 'drawer' %>  "
+                <% if (locals.oldDate && oldDate.price) { %> 
+                  value=' <%= oldDate.price %>  '
+                <% } %> 
+              />
+
+                <% if (locals.errors && errors.price) { %>
+                  <%= errors.price.msg %> 
+                <% } %> 
+
+            </div>
+            <div class="description">
+              <!-- <label for="img">Ingrese la foto de su producto</label>
+              <input type="file" name="img" id="img" class="drawer" required /> -->
+              <label for="img" class="drawer">
+                <span id="info">Ingrese la foto de su producto</span>
+              </label>
+              <input id="img" name="img" onchange='cambiar()' type="file" style='display: none;' />
+              
+              <% if (locals.errors && errors.img) { %>
+                <%= errors.img.msg %> 
+              <% } %> 
+
+            </div>
+
+            <div class="description">
+              <input type="text" name="shortDesc" id="shortDesc" class="drawer" 
+                placeholder="Haga una breve desdripcion del personaje" 
+                class=" <%= locals.errors && errors.shortDesc ? 'drawer-red' : 'drawer' %>  "
+                <% if (locals.oldDate && oldDate.shortDesc) { %> 
+                  value=' <%= oldDate.price %>  '
+                <% } %> 
+              />
+
+                <% if (locals.errors && errors.shortDesc) { %>
+                  <%= errors.shortDesc.msg %> 
+                <% } %> 
+
+            </div>
+
+            <div class="description">
+              <input type="text" 
+              name="longDesc" 
+              id="longDesc" 
+              class="drawer"
+              placeholder="Haga una descripcion del producto" 
+              class=" <%= locals.errors && errors.longDesc ? 'drawer-red' : 'drawer' %>  "
+              <% if(locals.oldDate && oldDate.longDesc){  %>
+                value=" <%= oldDate.longDesc %>  "
+              <% } %> 
+              />
+
+                <% if (locals.errors && errors.longDesc) { %>
+                  <%= errors.longDesc.msg %> 
+                <% } %> 
+
+            </div>
+
+            <div class="description">
+              <select name="category" id="category" class="drawer">
+                <option>Categoria</option>
+
+                <% let categorias=['Common', 'Rare', 'Very rare', 'Epic' ] %>
+                <% for (const categoria of categorias) {  %>
+                  <option value=" <%= categoria %>  "
+                  <%=  locals.oldDate && (categoria == oldDate.category) ? 'selected' : null %> 
+                  > <%= categoria %> </option>
+                <% } %> 
+              </select>
+
+              <% if (locals.errors && errors.category) { %>
+                <%= errors.category.msg %> 
+              <% } %> 
+
+            </div>
+            <div class="description">
+              <input type="text" name="universe" id="universe" class="drawer" placeholder="Universo" />
+
+              <% if (locals.errors && errors.universe) { %>
+                <%= errors.universe.msg %> 
+              <% } %> 
+
+            </div>
+            </div>
+            <div class="buttoms">
+              <button type="submit">Subir</button>
+              <button type="reset">Borrar</button>
+            </div>
+          
+        </form>
+      </div>
+    </main>
+    </body>
+    <script>
+      function cambiar() {
+        var pdrs = document.getElementById('img').files[0].name;
+        document.getElementById('info').innerHTML = pdrs;
+      }
+    </script>

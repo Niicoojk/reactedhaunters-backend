@@ -4,7 +4,7 @@ const multer = require("multer");
 
 // Requiring Controller, Middlewares & Scripts
 const controller = require("../../controllers/api/address");
-const validationAddress = require("../../middlewares/validations/user/validationsAddress");
+const validationAddress = require("../../middlewares/validations/user/address");
 
 const guestHandler = require("../../middlewares/handlers/guestHandler");
 const loggedHandler = require("../../middlewares/handlers/loggedHandler");

@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 3030;
 
 // Requiring Routes
 const routesAddress = require("./routes/api/address");
+const routesMain = require("./routes/main");
 const routesStore = require("./routes/store");
 const routesUser = require("./routes/user");
 
@@ -21,7 +22,7 @@ const routesApiUser = require("./routes/api/user");
 
 // Settings
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/views"));
+app.set("views", path.join(__dirname, "/views/"));
 app.use(express.static(path.join(__dirname, "/../public")));
 app.use(methodOverride("_method"));
 
@@ -43,19 +44,27 @@ app.use(async (req, res, next) => {
 	let ss = dateNow.getSeconds();
 	let ms = dateNow.getMilliseconds();
 
+	hh < 10 ? (hh = "0" + hh) : hh;
+	mn < 10 ? (mn = "0" + mn) : mn;
+	ss < 10 ? (ss = "0" + ss) : ss;
+	ms < 10 ? (ms = "0" + ms) : ms;
+	ms < 100 ? (ms = "0" + ms) : ms;
+
 	let time = "[" + hh + ":" + mn + ":" + ss + "." + ms + "]";
 
 	await fs.appendFile(
 		path.join(__dirname, "/logs/console.txt"),
-		`${time} In ${req.socket.remoteAddress}:${PORT}${req.url} used ${req.method}\n`
+		`${time} In ${req.socket.remoteAddress}:${PORT}${req.url} used ${req.method}`
 	);
 	console.log(
 		`${time} In ${req.socket.remoteAddress}:${PORT}${req.url} used ${req.method}`
 	);
+
 	next();
 });
 
 // Routes
+app.use("/", routesMain);
 app.use("/api/address", routesApiAddress);
 app.use("/api/store", routesApiStore);
 app.use("/api/user", routesApiUser);

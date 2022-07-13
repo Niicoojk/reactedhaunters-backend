@@ -23,23 +23,31 @@ const controller = {
 		let status = res.statusCode;
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
-			let userAddresses = await UserAddress.findAll({
-				where: {
-					user_id: user.id,
-				},
-			});
-			if (userAddresses.lenght < 1) {
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+				let userAddresses = await UserAddress.findAll({
+					where: {
+						user_id: user.id,
+					},
+				});
+				if (userAddresses.lenght < 1) {
+					res.status(200).json({
+						status: status,
+						errors: "The user has not registered any address yet.",
+					});
+				}
 				res.status(200).json({
 					status: status,
-					errors: "The user has not registered any address yet.",
+					userAddresses: userAddresses,
+					total: userAddresses.length,
 				});
 			}
-			res.status(200).json({
-				status: status,
-				userAddresses: userAddresses,
-				total: userAddresses.length,
-			});
 		} catch (error) {
 			consoleLogError(error);
 			res.status(400).json({
@@ -52,48 +60,56 @@ const controller = {
 		let status = res.statusCode;
 		let validationResults = validationResult(req);
 		try {
-			let { country, state, city, address, floor, apartment, postal_code } =
-				req.body;
-			let addressRegistered = await Address.findOne({
-				where: {
-					country: country,
-					state: state,
-					city: city,
-					address: address,
-					floor: floor,
-					apartment: apartment,
-					postal_code: postal_code,
-				},
-			});
-			if (addressRegistered) {
-				let vinculatingAddress = await UserAddress.create({
-					user_id: user.id,
-					address_id: addressRegistered.id,
-				});
-				res.json({
-					status: status,
-					data: addressRegistered,
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
 				});
 			} else {
-				let newAddress = await Address.create({
-					country: country,
-					state: state,
-					city: city,
-					address: address,
-					floor: floor,
-					apartment: apartment,
-					postal_code: postal_code,
-					created_at: formattedDateDb,
-					updated_at: formattedDateDb,
+				let { country, state, city, address, floor, apartment, postal_code } =
+					req.body;
+				let addressRegistered = await Address.findOne({
+					where: {
+						country: country,
+						state: state,
+						city: city,
+						address: address,
+						floor: floor,
+						apartment: apartment,
+						postal_code: postal_code,
+					},
 				});
-				let vinculatingAddress = await UserAddress.create({
-					user_id: user.id,
-					address_id: newAddress.id,
-				});
-				res.json({
-					status: status,
-					data: newAddress,
-				});
+				if (addressRegistered) {
+					let vinculatingAddress = await UserAddress.create({
+						user_id: user.id,
+						address_id: addressRegistered.id,
+					});
+					res.json({
+						status: status,
+						data: addressRegistered,
+					});
+				} else {
+					let newAddress = await Address.create({
+						country: country,
+						state: state,
+						city: city,
+						address: address,
+						floor: floor,
+						apartment: apartment,
+						postal_code: postal_code,
+						created_at: formattedDateDb,
+						updated_at: formattedDateDb,
+					});
+					let vinculatingAddress = await UserAddress.create({
+						user_id: user.id,
+						address_id: newAddress.id,
+					});
+					res.json({
+						status: status,
+						data: newAddress,
+					});
+				}
 			}
 		} catch (error) {
 			consoleLogError(error);
@@ -107,25 +123,33 @@ const controller = {
 		let status = res.statusCode;
 		let validationResults = validationResult(req);
 		try {
-			let { country, state, city, address, floor, apartment, postal_code } =
-				req.body;
-			let addressRegistered = await Address.findOne({
-				where: {
-					country: country,
-					state: state,
-					city: city,
-					address: address,
-					floor: floor,
-					apartment: apartment,
-					postal_code: postal_code,
-				},
-			});
-			if (addressRegistered) {
-			} else {
-				res.json({
-					status: 404,
-					errors: [],
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
 				});
+			} else {
+				let { country, state, city, address, floor, apartment, postal_code } =
+					req.body;
+				let addressRegistered = await Address.findOne({
+					where: {
+						country: country,
+						state: state,
+						city: city,
+						address: address,
+						floor: floor,
+						apartment: apartment,
+						postal_code: postal_code,
+					},
+				});
+				if (addressRegistered) {
+				} else {
+					res.json({
+						status: 404,
+						errors: [],
+					});
+				}
 			}
 		} catch (error) {
 			consoleLogError(error);
@@ -139,7 +163,15 @@ const controller = {
 		let status = res.statusCode;
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {
 			consoleLogError(error);
 			res.status(400).json({

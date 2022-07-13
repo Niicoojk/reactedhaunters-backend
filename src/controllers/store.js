@@ -21,63 +21,92 @@ const controller = {
 	list: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {}
 	},
 	productCreate: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {}
 	},
 	productDetail: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {}
 	},
 	productDelete: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {}
 	},
 	productFind: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {}
-	},
-	tierList: async (req, res) => {
-		let status = res.statusCode;
-		let validationResults = validationResult(req);
-		try {
-			let tiers = await Tier.findAll({
-				order: [["tier_id", "ASC"]],
-			});
-			res.status(200).json({
-				status: status,
-				tiers: tiers,
-			});
-		} catch (error) {
-			consoleLogError(error);
-			res.status(400).json({
-				status: 400,
-				error: error,
-			});
-		}
 	},
 	universeList: async (req, res) => {
 		let validationResults = validationResult(req);
 		let status = res.statusCode;
 		try {
-			let universe = await Universe.findAll({
-				order: [["universe_id", "ASC"]],
-			});
-			res.status(200).json({
-				status: status,
-				universe: universe,
-			});
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let universe = await Universe.findAll({
+					order: [["universe_id", "ASC"]],
+				});
+				res.status(200).json({
+					status: status,
+					universe: universe,
+				});
+			}
 		} catch (error) {
 			consoleLogError(error);
 			res.status(400).json({
@@ -89,13 +118,29 @@ const controller = {
 	universeOne: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {}
 	},
 	universeCreate: async (req, res) => {
 		let validationResults = validationResult(req);
 		try {
-			let {} = req.body;
+			if (validationResults.errors.length > 0) {
+				return res.render("", {
+					errors: validationResults.mapped(),
+					css: "",
+					title: "",
+				});
+			} else {
+				let {} = req.body;
+			}
 		} catch (error) {}
 	},
 };

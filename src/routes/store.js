@@ -34,19 +34,17 @@ const storage = multer.diskStorage({
 const router = express.Router();
 
 // Lists Products
-router.get("/", controller.list);
-router.get("/tier", controller.tierList);
-router.get("/universe/", controller.universeList);
+router.get("/", adminHandler, controller.list);
+router.get("/universe/", adminHandler, controller.universeList);
 
 // Product Routes
-router.post("/product/create", controller.productCreate);
-router.get("/name", controller.productFind);
-router.get("/:name/:tier", controller.productDetail);
-router.post("/:name/delete", controller.productDelete);
+router.post("/product/create", adminHandler, controller.productCreate);
+router.get("/name", adminHandler, controller.productFind);
+router.get("/:id/", adminHandler, controller.productDetail);
+router.post("/:id/delete", adminHandler, controller.productDelete);
 
 // Universe Routes
-
-router.get("/universe/:universe", controller.universeOne);
-router.post("/universe/create", controller.universeCreate);
+router.get("/universe/:universe", adminHandler, controller.universeOne);
+router.post("/universe/create", adminHandler, controller.universeCreate);
 
 module.exports = router;

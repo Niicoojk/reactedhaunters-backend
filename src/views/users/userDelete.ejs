@@ -1,0 +1,56 @@
+<%- include("../partials/head") %>
+
+<header>
+  <nav>
+    <figure class="brand">
+      <a href="/">
+        <img src="/img/brand/ghost-logo.svg" alt="DHaunters Logo">
+      </a>
+    </figure>
+    <p>
+      <a href="/user/">
+        Volver al Perfil
+      </a>
+    </p>
+  </nav>
+</header>
+
+<main>
+  <form method="POST">
+    <div>
+      <input 
+      type="text" 
+      name="user_name" 
+      id="user_name" 
+      placeholder="Ingrese su nombre de usuario" 
+      <% if (locals.old) { %>
+      value="<%= req.old.user_name %>"
+      <% } %>
+      >
+      <input 
+      type="password" 
+      name="password" 
+      id="password" 
+      placeholder="Ingrese su contraseña" 
+      <% if (locals.old) { %>
+      value="<%= req.old.password %>"
+      <% } %>
+      >
+    </div>
+
+  <div id="overlay">
+    <div id="popup">
+      <div id="confirmation" class="hidden">
+          <p>¿Estás seguro de que deseas eliminar tu cuenta?</p>
+          <button formaction="/user/delete">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+    <button id="prevSubmit">
+      Eliminar
+    </button>
+  </form>
+
+</main>

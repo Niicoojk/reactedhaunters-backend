@@ -1,0 +1,62 @@
+<%- include('../partials/head') %>
+  <%- include('../partials/header') %>
+
+    <main>
+
+      <form action="/store/editProduct/<%= producto.id %>?_method=PUT"" method=" post" enctype="multipart/form-data">
+
+        <h3>Formulario de edicion del producto <%= producto.name %>
+        </h3>
+        <div class="formulario">
+
+          <div class="description">
+            <input type="text" name="name" id="name" class="drawer" required placeholder="Nombre del producto" value="<%= producto.name %> "/>
+          </div>
+          <div class="description">
+            <label for="price"></label>
+            <input type="number" name="price" id="price" class="drawer" placeholder="Precio del producto" required value="<%= producto.price %> "/>
+          </div>
+          <div class="description">
+            <!-- <label for="img">Ingrese la foto de su producto</label>
+          <input type="file" name="img" id="img" class="drawer" required /> -->
+            <label for="img" class="drawer">
+              <span id="info">Ingrese la foto de su producto</span>
+            </label>
+            <input id="img" name="img" onchange='cambiar()' type="file" style='display: none;' />
+          </div>
+          <div class="description">
+            <label for="shortDesc"></label>
+            <input type="text" name="shortDesc" id="shortDesc" class="drawer" required rows="10" cols="50"
+              value="<%= producto.shortDesc %> " />
+          </div>
+          <div class="description">
+
+            <input type="text" name="longDesc" id="longDesc" rows="10" cols="50" class="drawer"
+              pvalue="<%= producto.longDesc %> " />
+          </div>
+          <div class="description">
+
+            <input type="text" name="universe" id="universe" class="drawer" value="<%= producto.universe %> " />
+          </div>
+          <div class="description">
+            <select name="category" id="category" class="drawer">
+              <option value="<%= producto.category %> " /></option>
+
+            </select>
+          </div>
+        </div>
+        <div class="buttoms">
+          <button type="submit">Subir</button>
+          <button type="reset">Borrar</button>
+        </div>
+
+      </form>
+
+    </main>
+    </body>
+    <script>
+      function cambiar() {
+        var pdrs = document.getElementById('img').files[0].name;
+        document.getElementById('info').innerHTML = pdrs;
+      }
+    </script>

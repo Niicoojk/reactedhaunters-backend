@@ -1,0 +1,167 @@
+<%- include("../partials/head") %>
+<%- include("../partials/headerUserForm") %>
+
+<main>
+  <div class="icono"><i class="fa-solid fa-circle-user"></i></div>
+  <form action="/user/register" method="POST" enctype="multipart/form-data">
+    <h3>Información del usuario</h3>
+    <div class="datos-u">     
+
+
+    <label for="image" 
+    class="<%= locals.errors && errors.image ? "drawer-red":"drawer" %> ">       
+    <span id="info">Selecciona una foto de perfil</span>
+    </label>
+    <input id="image" 
+    name="image" 
+      onchange='cambiar()' 
+      type="file"  
+      style='display: none;'
+    /> 
+    
+      <% if (locals.errors && errors.image) { %>
+        <div class="error-msg">
+          <%= errors.image.msg %>           
+      </div> 
+      <% } %>
+
+      <input type="text" 
+      name="first_name" 
+      placeholder="Nombres *" 
+      id="first_name" 
+      class="<%= locals.errors && errors.first_name ? "drawer-red":"drawer" %> "  
+      
+      <% if (locals.old && old.first_name ) { %>
+        value="<%= old.first_name  %>" 
+      <% } %>
+      >
+<!--el if de locals.old es para rescatar los datos validos del form -->
+      
+<!--if con donde vienen los mensajes de error -->
+
+      <% if (locals.errors && errors.first_name) { %>
+        <div class="error-msg">
+          <%= errors.first_name.msg %>           
+      </div> 
+      <% } %>
+
+      <input type="text" 
+      name="last_name" 
+      placeholder="Apellidos *" 
+      id="last_name" 
+      class="<%= locals.errors && errors.last_name ? "drawer-red":"drawer" %>"  
+      <% if (locals.old && old.last_name ) { %>
+        value="<%= old.last_name  %>" 
+        <% } %> 
+        />
+<!--el if de locals.old es para rescatar los datos validos del form -->
+      
+<!--if con donde vienen los mensajes de error -->
+      <% if (locals.errors && errors.last_name) { %>
+        <div class="error-msg">
+          <%= errors.last_name.msg %>           
+        </div> 
+        <% } %>
+
+      <input type="text" 
+      name="user_name" 
+      placeholder="Nombre de usuario *" 
+      id="user_name" 
+      class="<%= locals.errors && errors.user_name ? "drawer-red":"drawer"%>" 
+      <% if (locals.old && old.user_name ) { %>
+        value="<%= old.user_name  %>" 
+      <% } %>
+      />
+  <!--el if de locals.old es para rescatar los datos validos del form -->
+      
+  <!--if con donde vienen los mensajes de error -->
+      <% if (locals.errors && errors.user_name) { %>
+        <div class="error-msg">
+          <%= errors.user_name.msg %>           
+        </div> 
+      <% } %>
+
+      <input type="text" 
+      name="email" 
+      placeholder="E-mail *" 
+      id="email" 
+      class="<%= locals.errors && errors.email ? "drawer-red":"drawer" %>" 
+      <% if (locals.old && old.email) { %>
+        value="<%= old.email  %>" 
+      <% } %>
+      />
+  <!--el if de locals.old es para rescatar los datos validos del form -->
+      
+  <!--if con donde vienen los mensajes de error -->
+      <% if (locals.errors && errors.email) { %>
+        <div class="error-msg">
+          <%= errors.email.msg %>           
+        </div> 
+      <% } %>
+
+      <input type="password" 
+      name="password" 
+      placeholder="Contraseña *" 
+      id="password" 
+      class="<%= locals.errors && errors.password ? "drawer-red":"drawer" %> "  
+      />
+      
+    <!--if con donde vienen los mensajes de error -->
+
+      <% if (locals.errors && errors.password) { %>
+        <div class="error-msg">
+          <%= errors.password.msg %>           
+        </div> 
+      <% } %>
+      <input type="password" 
+      name="repeatedPassword" 
+      id="repeatedPassword" 
+      placeholder="Confirmar contraseña *" 
+      class="<%= locals.errors && errors.repeatedPassword ? "drawer-red":"drawer" %> " 
+        />
+      
+    <!--if con donde vienen los mensajes de error -->
+      <% if (locals.errors && errors.repeatedPassword) { %>
+        <div class="error-msg">
+          <%= errors.repeatedPassword.msg %>           
+        </div> 
+      <% } %>
+    </div>
+
+    <div class="checkbox">
+      <label for="terms_conditions"><input type="checkbox" 
+      name="terms_conditions" 
+      id="terms_conditions" 
+      value=1 />
+        Acepto términos y condiciones
+      </label>
+
+      <label for="email_send"><input type="checkbox" 
+        name="email_send" 
+        id="email_send" 
+        value="1" />
+        Quiero recibir promociones en mi correo
+      </label>
+    </div>
+    <!--if con donde vienen los mensajes de error -->
+    <% if (locals.errors && errors.terms_conditions) { %>
+      <div class="error-tyc">
+        <%= errors.terms_conditions.msg %>           
+      </div> 
+    <% } %>
+
+    <button type="submit" value="submit" class="registrarse">
+      <a href="/"></a>Registrarse
+    </button>
+  
+  </form>
+</main>
+</body>
+<script>
+  function cambiar(){
+  var pdrs = document.getElementById('image').files[0].name;
+  document.getElementById('info').innerHTML = pdrs;
+}
+</script>
+
+</html>

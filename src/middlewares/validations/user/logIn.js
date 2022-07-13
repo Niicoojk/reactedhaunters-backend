@@ -15,6 +15,7 @@ const UserAddress = db.UserAddress;
 
 // Requiring Scripts & Declaring Variables
 
+// Validations
 const validations = [
 	body("login_key")
 		.notEmpty()
@@ -45,9 +46,10 @@ const validations = [
 		.withMessage("Debes completar este campo.")
 		.bail()
 		.custom(async (value, { req }) => {
-			let includesAt = value.includes("@");
+			let { login_key } = req.body;
+			let includesAt = login_key.includes("@");
 			if (includesAt) {
-				let user = await User.findOne({ where: { email: value } });
+				let user = await User.findOne({ where: { email: login_key } });
 				let validatePassword = bcrypt.compareSync(value, user.password);
 				if (!validatePassword) {
 					throw new Error("La contraseña no es correcta.");
@@ -55,7 +57,7 @@ const validations = [
 					return true;
 				}
 			} else if (!includesAt) {
-				let user = await User.findOne({ where: { user_name: value } });
+				let user = await User.findOne({ where: { user_name: login_key } });
 				let validatePassword = bcrypt.compareSync(value, user.password);
 				if (!validatePassword) {
 					throw new Error("La contraseña no es correcta.");

@@ -1,0 +1,18 @@
+<%- include("partials/head") %>
+<%- include("partials/header") %>
+
+<main>
+	<% if (locals.banners) { %>
+	 
+	<% } %>
+
+	<% if (locals.products) { %>
+	 
+	<% } else {%>
+		<p>
+			Actualmente no se encontraron productos, intenta más tarde!
+		</p>
+	<% } %> 
+</main>
+
+<%- include("partials/footer") %>
