@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <% if (locals.css) { %>
-      <link rel="stylesheet" href="/css/<%= css %>.css" />
-    <% } %>
-    <title><%= title %></title>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="/css/styles.css" />
+<% if (locals.css) { %>
+  <link 
+  rel="stylesheet" 
+  href="/css/<%= css %>.css" />
+<% } %>
+<% if (locals.css2) { %>
+  <link 
+  rel="stylesheet" 
+  href="/css/<%= css2 %>.css" />
+<% } %>
+  <title><%= title %></title>
+</head>
+
+<body>
+
+<% if (locals.errors && locals.notAdmin) { %>
+  <h3 class="danger not--admin">
+    This user is not registered as an admin.
+  </h3>
+<% } %>

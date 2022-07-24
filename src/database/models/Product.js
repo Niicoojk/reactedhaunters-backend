@@ -7,7 +7,11 @@ module.exports = (sequelize, dataTypes) => {
 			primaryKey: true,
 			allowNull: false,
 		},
-		universe: {
+		universe_id: {
+			type: dataTypes.INTEGER(10),
+			allowNull: false,
+		},
+		tier_id: {
 			type: dataTypes.INTEGER(10),
 			allowNull: false,
 		},
@@ -17,10 +21,6 @@ module.exports = (sequelize, dataTypes) => {
 		},
 		short_desc: {
 			type: dataTypes.STRING,
-			allowNull: false,
-		},
-		tier_id: {
-			type: dataTypes.INTEGER(10),
 			allowNull: false,
 		},
 		created_at: {

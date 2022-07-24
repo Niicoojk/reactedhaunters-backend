@@ -57,12 +57,13 @@ const controller = {
 
 		try {
 			if (validationResults.errors.length > 0) {
-				return res.render("", {
+				return res.render("users/login.ejs", {
 					errors: validationResults.mapped(),
 					css: "forms",
 					title: "Iniciar sesión - !",
 					headerText: "Registrarse",
 					headerLink: "/user/register",
+					oldData: req.body,
 				});
 			} else {
 				// Requiring Form Fields
@@ -88,21 +89,25 @@ const controller = {
 					req.session.user = user;
 					res.redirect("/user");
 				} else {
-					return res.render("", {
+					return res.render("users/login.ejs", {
 						errors: validationResults.mapped(),
 						css: "forms",
 						title: "Iniciar sesión - !",
 						headerText: "Registrarse",
 						headerLink: "/user/register",
+						oldData: req.body,
 					});
 				}
 			}
 		} catch (error) {
 			consoleLogError(error);
-			return res.render("", {
+			return res.render("users/login.ejs", {
 				errors: validationResults.mapped(),
-				css: "",
-				title: "",
+				css: "forms",
+				title: "Iniciar sesión - !",
+				headerText: "Registrarse",
+				headerLink: "/user/register",
+				oldData: req.body,
 			});
 		}
 	},
@@ -131,9 +136,10 @@ const controller = {
 				let { first_name, last_name, user_name, email, password } = req.body;
 
 				// Setting fields that doesn't came directly form the form
+				let image;
 				req.file
-					? (image = "/img/avatars/default.png")
-					: (image = "/img/avatars/" + req.file.filename);
+					? (image = "default.png")
+					: (image = req.file.filename);
 				let terms_conditions = 1;
 				let created_at = formattedDateDb;
 				let updated_at = formattedDateDb;
@@ -166,6 +172,7 @@ const controller = {
 				title: "Registrarse - !",
 				headerText: "Iniciar sesión",
 				headerLink: "/user/login",
+				oldData: req.body,
 			});
 		}
 	},
@@ -246,7 +253,8 @@ const controller = {
 				first_name = verifyEmpty(first_name, user.first_name);
 				last_name = verifyEmpty(last_name, user.last_name);
 				email = verifyEmpty(email, user.email);
-				req.file ? (image = "/img/avatars" + req.file.filename) : user.image;
+				let image;
+				req.file ? (image = req.file.filename) : user.image;
 
 				// Updating the User
 				await User.update(
@@ -357,6 +365,13 @@ const controller = {
 				let {} = req.body;
 			}
 		} catch (error) {}
+	},
+	profile: async (req,res)=> {
+		console.log(req.session.user)
+		res.render("users/userProfile.ejs",{
+			title: "Iniciar sesión",
+			user: req.session.user,
+		})
 	},
 };
 

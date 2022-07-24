@@ -3,7 +3,7 @@ const handler = (req, res, next) => {
 	if (user) {
 		return next();
 	} else {
-		return res.redirect("/user/login");
+		return res.redirect("/user/register");
 	}
 };
 

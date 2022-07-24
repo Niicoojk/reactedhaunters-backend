@@ -9,21 +9,25 @@
         <li><a href="/user/cart">Carrito</a></li>
         <li><a href="/user/collection">Colección</a></li>
         <li><a href="/user/favourites">Favoritos</a></li>
-        <li>
-          <a href="/store/createProduct">Creacion de Productos</a>
-        </li>
+        <% if (locals.user && user.admin === true) { %>
+          <li>
+            <a href="/store/product/create">Creacion de Productos</a>
+          </li>
+        <% } %>
       </ul>
     </div>
     <div>
-      <% if (locals.user) { %>
-       <a href="/user/">
+    <% if (locals.user) { %>
+      <a href="/user/">
+        <figure class="avatar-hold">
+          <img src="/img/avatars/<%= user.image %>" alt="UImg">
+        </figure>
+    </a>
+    <% } else {%>
+      <a href="#" id="choice">
         <i class="fa-regular fa-user"></i>
-       </a>
-      <% } else {%>
-        <a href="#" id="choice">
-          <i class="fa-regular fa-user"></i>
-        </a>
-      <% } %> 
+      </a>
+    <% } %> 
       <a href="" id="burgerMenu"><i class="fa-solid fa-bars"></i></a>
     </div>
     <div class="mobileNav">

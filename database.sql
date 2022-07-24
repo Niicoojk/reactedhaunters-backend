@@ -55,7 +55,7 @@ CREATE TABLE `addresses`(
 	`address_number` SMALLINT(12) NOT NULL,
 	`floor` SMALLINT(10) DEFAULT 0,
 	`apartment` SMALLINT(10) DEFAULT 0,
-	`postal_code` SMALLINT(10) NOT NULL,
+	`postal_code` SMALLINT(10) NOT NULL
 ) ENGINE=INNODB;
 
 CREATE TABLE `users_addresses` (
@@ -109,5 +109,5 @@ INSERT INTO `tiers` (`value`) VALUES ('Common'),('Uncommon'),('Rare'),('Epic'),(
 
 INSERT INTO `products`(`universe_id`, `tier_id`,`name`,`short_desc`,`long_desc`,`price`,`image`,`created_at`,`updated_at`) VALUES ('1','5','Pikachu Gorra','Un fiel compañero Pokemon de tipo eléctrico.', 'Un fiel compañero Pokemon de tipo eléctrico, el cuál es el compañero del protagonista del anime, Ash Ketchup, y lo podemos ver con la gorra del mismo en la imágen de esta edición especial de lanzamiento la tarjeta.','99.99','/img/pokemon/5/pikachugorra.png','2022/03/10 15:53:10','2022/03/10 15:53:10');
 
-INSERT INTO `users` ( `admin`, `first_name`, `last_name`, `user_name`, `email`, `password`, `image`, `terms_conditions`, `email_send`, `deleted`) VALUES ( '1', 'Admin', 'Istrator', 'Administrator', 'administrator@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Nicolás', 'Barragán', 'NicoB', 'nicobarragan@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Diego', 'Giraldo', 'DiegoG', 'diegogiraldo@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Matias', 'Torres Contreras', 'MatiTC', 'matiastc@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('1', 'Anthony', 'Micha', 'AnthonyM', 'anthonymicha@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/default.png', '1', '0', '0'), ('0', 'Jose', 'Argento', 'PepeArgento', 'pepeargento@gmail.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', '/img/avatars/1656765208541-pepeargento.png', '1', '0', '0');
+INSERT INTO `users` ( `admin`, `first_name`, `last_name`, `user_name`, `email`, `password`, `image`, `terms_conditions`, `email_send`, `deleted`) VALUES ( '1', 'Admin', 'Istrator', 'Administrator', 'administrator@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', 'default.png', '1', '0', '0'), ('1', 'Nicolás', 'Barragán', 'NicoB', 'nicobarragan@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', 'default.png', '1', '0', '0'), ('1', 'Diego', 'Giraldo', 'DiegoG', 'diegogiraldo@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', 'default.png', '1', '0', '0'), ('1', 'Matias', 'Torres Contreras', 'MatiTC', 'matiastc@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', 'default.png', '1', '0', '0'), ('1', 'Anthony', 'Micha', 'AnthonyM', 'anthonymicha@dhaunters.com', '$2a$10$3pAuaxxTA3YwBFlXQbY2wu/AipIDN5u7u9nr2p0gnBzJEIe2rXw6i', 'default.png', '1', '0', '0');
 -- La contraseña de los usuarios por defecto es hola1234

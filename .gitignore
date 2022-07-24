@@ -3,3 +3,5 @@ node_modules
 test.js
 
 src/logs/console.txt
+
+src/database/config/config.js

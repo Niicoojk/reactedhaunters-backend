@@ -6,6 +6,11 @@ module.exports = (sequelize, dataTypes) => {
 			primaryKey: true,
 			autoIncrement: true,
 		},
+		admin: {
+			type: dataTypes.BOOLEAN,
+			allowNull: false,
+			default: 0,
+		},
 		first_name: {
 			type: dataTypes.STRING(100),
 			allowNull: false,

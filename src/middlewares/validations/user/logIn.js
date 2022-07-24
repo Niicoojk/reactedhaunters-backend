@@ -22,7 +22,7 @@ const validations = [
 		.withMessage("Debes completar este campo.")
 		.bail()
 		.custom(async (value, { req }) => {
-			let includesAt = value.includes("@");
+			let includesAt = req.body.login_key.includes("@");
 			if (includesAt) {
 				let user = await User.findOne({ where: { email: value } });
 				if (!user) {
@@ -34,8 +34,8 @@ const validations = [
 				let user = await User.findOne({ where: { user_name: value } });
 				if (!user) {
 					throw new Error("No se encontró al usuario.");
-				} else {
-					return true;
+				} else if (includesAt === undefined) {
+					throw new Error("Introduce un usuario.")
 				}
 			} else {
 				throw new Error("No se encontró el usuario.");

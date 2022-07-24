@@ -29,6 +29,7 @@ const storage = multer.diskStorage({
 		cb(null, multerFileName);
 	},
 });
+const uploadFile = multer({storage});
 
 // Router
 const router = express.Router();
@@ -38,7 +39,8 @@ router.get("/", adminHandler, controller.list);
 router.get("/universe/", adminHandler, controller.universeList);
 
 // Product Routes
-router.post("/product/create", adminHandler, controller.productCreate);
+router.get("/product/create", adminHandler, controller.productCreate)
+router.post("/product/create", uploadFile.single('image'), controller.productCreated);
 router.get("/name", adminHandler, controller.productFind);
 router.get("/:id/", adminHandler, controller.productDetail);
 router.post("/:id/delete", adminHandler, controller.productDelete);

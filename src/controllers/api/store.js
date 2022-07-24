@@ -20,9 +20,46 @@ const consoleLogError = require("../../scripts/consoleLogError");
 const controller = {
 	list: async (req, res) => {
 		let validationResults = validationResult(req);
+		let resStatus = res.statusCode;
 		try {
-			let {} = req.body;
-		} catch (error) {}
+			// Making the queries
+			let products = await Product.findAll({
+				order: [
+					['product_id', 'ASC'],
+					['name', 'ASC']
+				]
+			});
+			let tiers = await Tier.findAll({
+				order: [
+					['tier_id', 'ASC']
+				]
+			});
+			let universes = await Universe.findAll({
+				order: [
+					['universe', 'ASC']
+				]
+			});
+
+			// Sending response
+			res.status(resStatus).json({
+				totals: {
+					'products': products.length,
+					'tiers': tiers.length,
+					'universes': universes.length,
+				},
+				data: {
+					'products': products,
+					'tiers': tiers,
+					'universes': universes,
+				},
+				status: resStatus,
+			})
+		} catch (error) {
+			consoleLogError(error);
+			res.status(400).json({
+				errors: validationResults.mapped(),
+			});
+		}
 	},
 	productCreate: async (req, res) => {
 		let validationResults = validationResult(req);

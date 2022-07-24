@@ -15,6 +15,11 @@ button{
   padding: 7px;
   text-align: center;
   margin: 0 auto;
+  border-radius: 10px;
+  background: #104c53;
+}
+button:hover {
+  box-shadow: 20px 7px teal;
 }
 
 @media (min-width: 1280px){

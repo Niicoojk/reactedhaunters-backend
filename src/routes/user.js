@@ -24,21 +24,23 @@ const storage = multer.diskStorage({
 		cb(null, multerFileName);
 	},
 });
+const uploadFile = multer({storage});
 
 // Router
 const router = express.Router();
 
 // User Main Routes
-router.get("/login", controller.signIn);
+router.get("/login", guestHandler, controller.signIn);
 router.post("/login", validationLogIn, controller.login);
-router.get("/register", controller.signUp);
+router.get("/register", uploadFile.single('image'), guestHandler, controller.signUp);
 router.post("/register", validationRegister, controller.register);
+router.get("/", loggedHandler, controller.profile)
 
 // Update & Delete User Routes
 router.get("/update", loggedHandler, controller.userUpdate);
-router.post("/update", loggedHandler, controller.userUpdated);
+router.post("/update", uploadFile.single('image'), controller.userUpdated);
 router.get("/delete", loggedHandler, controller.userDelete);
-router.post("/delete", loggedHandler, controller.userDeleted);
+router.post("/delete", controller.userDeleted);
 
 // Favourites
 router.get("/:id/favourites", controller.favouritesList);
