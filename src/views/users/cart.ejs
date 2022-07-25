@@ -1,53 +1,78 @@
-<%- include("../partials/head") %>
-<%- include("../partials/header") %>
+<%- include("../partials/head") %> <%- include("../partials/header") %>
 
 <main>
-    <section>
-        <article class="cartHeader">
-            <span>Productos</span>
-            <span id="cleanCart" class="remove">Vaciar Carrito</span>
-        </article>
-        <hr>
-        <article class="cartItems">
-            <% product.forEach(product => { %>
-             <div class="cartItem">
-                <a href="/products/product/<%= product.id %>">
-                    <figure>
-                        <img src="/img/products/<%= product.img %> " alt="<%= product.title %> ">
-                    </figure>
-                </a>
-                <div class="itemDesc">
-                    <div class="detailLeft">
-                        <a href="/products/product/<%= product.id %>">
-                            <h3> <%= product.title %> </h3>
-                            <h5> <%= product.serial %> </h5>
-                        </a>
-                    </div>
-                    <div class="counter">
-                        <span class="btn">-</span>
-                        <span class="counter">2</span>
-                        <span class="btn">+</span>
-                    </div>
-                    <div class="detailRight">
-                        <h4> USD <%= product.price %> </h4>
-                        <p class="later">Comprar más tarde</p>
-                        <p class="remove">Quitar del carrito</p>
-                    </div>
-                </div>
-             </div>
-            <% }) %>
-        </article>
-        <hr>
-        <article class="checkout">
-            <div class="total">
-                <div class="subtotal">
-                    <p>Subtotal</p>
-                    <h6>Items <%= lenght %></h6>
-                </div>
-                <h4>USD 155</h4>
-                <button type="submit">Comprar</button>
-            </div>
-        </article>
-    </section>
+  <% if (products.totalQuantity > 0) { %>
+  <section>
+    <article class="cartTop">
+      <span>Productos</span>
+      <span id="cleanCart" class="remove"> Vaciar carrito </span>
+    </article>
+    <article class="cartMid"></article>
+    <article class="cartBot">
+      <p>Cantidad de Productos: <%= products.totalQuantity %></p>
+      <div class="subtotals">
+        <p>Subtotal: <%= products.totalPrice %></p>
+      </div>
+      <div>
+        <button class="checkout">Comprar</button>
+      </div>
+    </article>
+  </section>
+  <% } else { %>
+  <section>
+    <p>No hay productos en el carrito</p>
+  </section>
+  <% } %> <% /* %>
+  <section>
+    <article class="cartHeader">
+      <span>Productos</span>
+      <span id="cleanCart" class="remove">Vaciar Carrito</span>
+    </article>
+    <hr />
+    <article class="cartItems">
+      <% product.forEach(product => { %>
+      <div class="cartItem">
+        <a href="/products/product/<%= product.id %>">
+          <figure>
+            <img
+              src="/img/products/<%= product.img %> "
+              alt="<%= product.title %> "
+            />
+          </figure>
+        </a>
+        <div class="itemDesc">
+          <div class="detailLeft">
+            <a href="/products/product/<%= product.id %>">
+              <h3><%= product.title %></h3>
+              <h5><%= product.serial %></h5>
+            </a>
+          </div>
+          <div class="counter">
+            <span class="btn">-</span>
+            <span class="counter">2</span>
+            <span class="btn">+</span>
+          </div>
+          <div class="detailRight">
+            <h4>USD <%= product.price %></h4>
+            <p class="later">Comprar más tarde</p>
+            <p class="remove">Quitar del carrito</p>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </article>
+    <hr />
+    <article class="checkout">
+      <div class="total">
+        <div class="subtotal">
+          <p>Subtotal</p>
+          <h6>Items <%= lenght %></h6>
+        </div>
+        <h4>USD 155</h4>
+        <button type="submit">Comprar</button>
+      </div>
+    </article>
+  </section>
+  <% */ %>
 </main>
 <%- include("../partials/footer") %>

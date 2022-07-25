@@ -15,16 +15,16 @@ const formattedDate = require("../scripts/formattedDate");
 
 // Setting Multer
 const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, path.join(__dirname, "/../../public/images/avatars"));
-	},
-	filename: (req, file, cb) => {
-		const multerFileName = `${formattedDate}-${file.originalname}`;
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "/../../public/images/avatars"));
+  },
+  filename: (req, file, cb) => {
+    const multerFileName = `${formattedDate}_${file.originalname}`;
 
-		cb(null, multerFileName);
-	},
+    cb(null, multerFileName);
+  },
 });
-const uploadFile = multer({storage});
+const uploadFile = multer({ storage });
 
 // Router
 const router = express.Router();
@@ -32,13 +32,19 @@ const router = express.Router();
 // User Main Routes
 router.get("/login", guestHandler, controller.signIn);
 router.post("/login", validationLogIn, controller.login);
-router.get("/register", uploadFile.single('image'), guestHandler, controller.signUp);
+router.get(
+  "/register",
+  uploadFile.single("image"),
+  guestHandler,
+  controller.signUp
+);
 router.post("/register", validationRegister, controller.register);
-router.get("/", loggedHandler, controller.profile)
+router.get("/", loggedHandler, controller.profile);
+router.get("/logout", loggedHandler, controller.logout);
 
 // Update & Delete User Routes
 router.get("/update", loggedHandler, controller.userUpdate);
-router.post("/update", uploadFile.single('image'), controller.userUpdated);
+router.post("/update", uploadFile.single("image"), controller.userUpdated);
 router.get("/delete", loggedHandler, controller.userDelete);
 router.post("/delete", controller.userDeleted);
 

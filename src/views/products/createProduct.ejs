@@ -98,7 +98,7 @@
             <% for( let i = 0; i < tiers.length; i++ ) { %>
             <option 
               value="<%= tiers[i].tier_id %>" 
-              <% locals.oldData && (tier == oldData.tier_id) ? 'selected' : null %>
+              <% locals.oldData && (tiers[i] == oldData.tier) ? 'selected' : null %>
             >
               <%= tiers[i].value %>
             </option>
@@ -118,7 +118,7 @@
           <% for( let i = 0; i < universes.length; i++ ) { %>
             <option 
               value="<%= universes[i].universe_id %>"
-              <% locals.oldData && (tier == oldData.tier_id) ? 'selected' : null %>
+              <% locals.oldData && (universes[i] == oldData.universe) ? 'selected' : null %>
             >
               <%= universes[i].universe %>
             </option>

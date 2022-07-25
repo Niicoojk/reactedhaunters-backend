@@ -1,18 +1,33 @@
-<%- include("partials/head") %>
-<%- include("partials/header") %>
+<%- include("partials/head") %> <%- include("partials/header") %>
 
 <main>
-	<% if (locals.banners) { %>
-	 
-	<% } %>
-
-	<% if (locals.products) { %>
-	 
-	<% } else {%>
-		<p>
-			Actualmente no se encontraron productos, intenta más tarde!
-		</p>
-	<% } %> 
+  <% if (locals.banners) { %>
+  <section class="banners"></section>
+  <% } else { %>
+  <section class="banners">
+    <p>Próximamente habrá promociones</p>
+  </section>
+  <% } %>
+  <h4>Productos:</h4>
+  <% if (locals.products) { %>
+  <section>
+    <% products.forEach(product => { %>
+    <article class="product-card">
+      <a href="">
+        <figure>
+          <img src="/img/products/<%=product.image%>" alt="<%=product.name%>" />
+        </figure>
+        <div class="caption">
+          <h5><%=product.name%></h5>
+          <p>$ <%=product.price%></p>
+        </div>
+      </a>
+    </article>
+    <% }) %>
+  </section>
+  <% } else {%>
+  <p>Actualmente no se encontraron productos, intenta más tarde!</p>
+  <% } %>
 </main>
 
-<%- include("partials/footer") %>
+<%- include("partials/footerWithTop") %>

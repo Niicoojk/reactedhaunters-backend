@@ -1,11 +1,11 @@
-<%- include ("./partials/head") %>
-<%- include ("./partials/header") %>
+<%- include ("./partials/head") %> <%- include ("./partials/header") %>
 
 <main>
   <p>Algo malió sal.</p>
+  <p>Revisa si ingresaste a la ruta correcta.</p>
   <% if (locals.error) { %>
-   <p>
-    <%= error %>
-   </p>
+  <p><%= error %></p>
   <% } %>
 </main>
+
+<%- include ("./partials/footer") %>

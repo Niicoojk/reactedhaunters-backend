@@ -11,36 +11,34 @@ const formattedDate = require("../scripts/formattedDate");
 
 // Setting Multer
 const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(
-			null,
-			path.join(
-				__dirname,
-				"/../../public/images/products/",
-				req.body.universe,
-				"/",
-				req.body.tier
-			)
-		);
-	},
-	filename: (req, file, cb) => {
-		const multerFileName = `${formattedDate}-${file.originalname}`;
+  destination: (req, file, cb) => {
+    cb(
+      null,
+      path.join(__dirname, "/../../public/images/products/", req.body.tier, "/")
+    );
+  },
+  filename: (req, file, cb) => {
+    const multerFileName = `${formattedDate}-${file.originalname}`;
 
-		cb(null, multerFileName);
-	},
+    cb(null, multerFileName);
+  },
 });
-const uploadFile = multer({storage});
+const uploadFile = multer({ storage });
 
 // Router
 const router = express.Router();
 
 // Lists Products
-router.get("/", adminHandler, controller.list);
+router.get("/", controller.list);
 router.get("/universe/", adminHandler, controller.universeList);
 
 // Product Routes
-router.get("/product/create", adminHandler, controller.productCreate)
-router.post("/product/create", uploadFile.single('image'), controller.productCreated);
+router.get("/product/create", adminHandler, controller.productCreate);
+router.post(
+  "/product/create",
+  uploadFile.single("image"),
+  controller.productCreated
+);
 router.get("/name", adminHandler, controller.productFind);
 router.get("/:id/", adminHandler, controller.productDetail);
 router.post("/:id/delete", adminHandler, controller.productDelete);

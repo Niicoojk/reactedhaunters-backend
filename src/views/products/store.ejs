@@ -1,0 +1,32 @@
+<%- include("../partials/head") %> <%- include("../partials/header") %>
+
+<main class="marketplace">
+  <section class="product-list">
+    <div class="product-section-title">
+      <h2>Lista de productos</h2>
+    </div>
+    <% for (let product of products) {%>
+
+    <div class="containerProduct">
+      <a href="/store/productDetails/<%=product.id%>">
+        <article class="product">
+          <figure>
+            <img
+              src="/img/products/<%=product.image%>"
+              alt="Image of <%= product.name %> "
+            />
+          </figure>
+          <div class="productDetail">
+            <h3><%= product.name %></h3>
+            <p class="product-description"><%= product.universe %></p>
+            <h4 class="price"><%= product.price %></h4>
+          </div>
+        </article>
+      </a>
+    </div>
+
+    <% } %>
+  </section>
+</main>
+
+<%- include("../partials/footerWithTop.ejs") %>

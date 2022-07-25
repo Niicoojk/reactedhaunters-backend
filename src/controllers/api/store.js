@@ -42,6 +42,7 @@ const controller = {
 
 			// Sending response
 			res.status(resStatus).json({
+				status: resStatus,
 				totals: {
 					'products': products.length,
 					'tiers': tiers.length,
@@ -52,7 +53,6 @@ const controller = {
 					'tiers': tiers,
 					'universes': universes,
 				},
-				status: resStatus,
 			})
 		} catch (error) {
 			consoleLogError(error);
