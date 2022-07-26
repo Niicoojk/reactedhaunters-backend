@@ -7,7 +7,7 @@ const path = require("path");
 const controller = require("../controllers/store");
 const adminHandler = require("../middlewares/handlers/adminHandler");
 
-const formattedDate = require("../scripts/formattedDate");
+const formattedDate = require("../middlewares/other/formattedDate");
 
 // Setting Multer
 const storage = multer.diskStorage({
@@ -29,8 +29,13 @@ const uploadFile = multer({ storage });
 const router = express.Router();
 
 // Lists Products
-router.get("/", controller.list);
-router.get("/universe/", adminHandler, controller.universeList);
+router.get("/", controller.store);
+
+// Universe Routes
+router.get("/universe", adminHandler, controller.universeList);
+router.get("/universe/create", adminHandler, controller.universeCreate);
+router.post("/universe/create", adminHandler, controller.universeCreated);
+router.get("/universe/:universe", adminHandler, controller.universeOne);
 
 // Product Routes
 router.get("/product/create", adminHandler, controller.productCreate);
@@ -39,12 +44,8 @@ router.post(
   uploadFile.single("image"),
   controller.productCreated
 );
-router.get("/name", adminHandler, controller.productFind);
-router.get("/:id/", adminHandler, controller.productDetail);
-router.post("/:id/delete", adminHandler, controller.productDelete);
-
-// Universe Routes
-router.get("/universe/:universe", adminHandler, controller.universeOne);
-router.post("/universe/create", adminHandler, controller.universeCreate);
+// router.get("/search", controller.productSearch);
+router.get("/:name/", controller.productDetail);
+router.post("/:name/delete", adminHandler, controller.productDelete);
 
 module.exports = router;

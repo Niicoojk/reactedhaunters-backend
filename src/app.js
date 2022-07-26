@@ -61,10 +61,10 @@ app.use(isAdmin);
 
 // Routes
 app.use("/", routesMain);
-app.use("/api/address", routesApiAddress);
+// app.use("/api/address", routesApiAddress);
 app.use("/api/store", routesApiStore);
 app.use("/api/user", routesApiUser);
-app.use("/address", routesAddress);
+// app.use("/address", routesAddress);
 app.use("/store", routesStore);
 app.use("/user", routesUser);
 app.use((req, res, next) => {

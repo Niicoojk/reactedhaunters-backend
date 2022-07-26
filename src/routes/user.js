@@ -3,7 +3,7 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 
-// Requiring Controller, Middlewares & Scripts
+// Requiring Controller && Middlewares
 const controller = require("../controllers/user");
 const validationLogIn = require("../middlewares/validations/user/logIn");
 const validationRegister = require("../middlewares/validations/user/register");
@@ -11,7 +11,7 @@ const validationRegister = require("../middlewares/validations/user/register");
 const guestHandler = require("../middlewares/handlers/guestHandler");
 const loggedHandler = require("../middlewares/handlers/loggedHandler");
 
-const formattedDate = require("../scripts/formattedDate");
+const formattedDate = require("../middlewares/other/formattedDate");
 
 // Setting Multer
 const storage = multer.diskStorage({

@@ -9,19 +9,24 @@
         <li><a href="/user/cart">Carrito</a></li>
         <li><a href="/user/collection">Colección</a></li>
         <li><a href="/user/favourites">Favoritos</a></li>
-        <% if (locals.admin === true) { %>
-        <li>
-          <a href="/store/product/create">Creacion de Productos</a>
-        </li>
-        <% } %>
       </ul>
     </div>
+    <% if (locals.admin === true) { %>
+        <div class="dropdown">
+          <ul class="dropdownMenu">
+            <a href="/store/product/create">Creacion de Productos</a>
+          </ul>
+        </div>
+        <% } %>
     <div>
       <% if (locals.user) { %>
       <a href="/user/">
         <figure class="avatar-hold">
           <img src="/img/avatars/<%= user.image %>" alt="UImg" />
         </figure>
+        <p userName="<%= user.user_name %>" id="userName">
+          <%= user.user_name %>
+        </p>
       </a>
       <% } else {%>
       <a href="#" id="choice">

@@ -14,9 +14,9 @@ const User = db.User;
 const UserAddress = db.UserAddress;
 
 // Requiring Scripts & Declaring Variables
-const formattedDateDb = require("../scripts/formattedDateDb");
-const consoleLogError = require("../scripts/consoleLogError");
-const CartConstructor = require("../scripts/cartConstructor");
+const formattedDateDb = require("../middlewares/other/formattedDateDb");
+const consoleLogError = require("../middlewares/other/consoleLogError");
+const CartConstructor = require("../middlewares/utilities/cartConstructor");
 
 let verifyEmpty = (isEmpty, oldData) => {
   if (isEmpty === "" || isEmpty === " ") {
@@ -181,7 +181,7 @@ const controller = {
 
         // Setting fields that doesn't came directly form the form
         let image;
-        req.file ? (image = "default.png") : (image = req.file.filename);
+        req.file ? (image = req.file.filename) : (image = "default.png");
         let terms_conditions = 1;
         let created_at = formattedDateDb;
         let updated_at = formattedDateDb;
@@ -228,7 +228,6 @@ const controller = {
     res.render("users/userDelete.ejs", {
       css: "forms",
       title: "Borrar usuario.",
-      user: req.session.user,
       headerText: "Volver al perfil",
       headerLink: "/user/",
     });
@@ -243,10 +242,9 @@ const controller = {
           title: "Borrar usuario - !",
           headerText: "Volver al perfil",
           headerLink: "/user/",
-          errors: validationResults.mapped(),
         });
       } else {
-        let { user } = req.session;
+        let { user_name } = req.body;
 
         // Updating the 'deleted' column
         await User.update(
@@ -255,9 +253,14 @@ const controller = {
             deleted: 1,
           },
           {
-            where: { user_id: user.id },
+            where: { user_name: user_name },
           }
         );
+        res.clearCookie("cookieUser");
+        req.session.destroy();
+
+        console.log("Usuario Eliminado");
+        res.redirect("/user/logout");
       }
     } catch (error) {
       res.render("users/userDelete.ejs", {
@@ -452,7 +455,6 @@ const controller = {
     console.log(req.session.user);
     res.render("users/userProfile.ejs", {
       title: "Iniciar sesión",
-      user: req.session.user,
     });
   },
 };

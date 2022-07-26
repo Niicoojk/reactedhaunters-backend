@@ -13,12 +13,12 @@ const User = db.User;
 const UserAddress = db.UserAddress;
 
 // Requiring Scripts & Declaring Variables
-const formattedDateDb = require("../scripts/formattedDateDb");
-const consoleLogError = require("../scripts/consoleLogError");
+const formattedDateDb = require("../middlewares/other/formattedDateDb");
+const consoleLogError = require("../middlewares/other/consoleLogError");
 
 // Defining Controller
 const controller = {
-  list: async (req, res) => {
+  store: async (req, res) => {
     try {
       let products = await Product.findAll();
       res.render("products/store.ejs", {
@@ -38,13 +38,12 @@ const controller = {
     let universes = await Universe.findAll({
       order: [["universe", "ASC"]],
     });
-    res.render("products/createProduct.ejs", {
+    res.render("products/productCreate.ejs", {
       title: "Crea un nuevo producto",
       css: "forms",
       css2: "stylesForms",
       tiers,
       universes,
-      user: req.session.user,
     });
   },
   productCreated: async (req, res) => {
@@ -113,46 +112,50 @@ const controller = {
     }
   },
   productDetail: async (req, res) => {
-    let validationResults = validationResult(req);
-    try {
-      if (validationResults.errors.length > 0) {
-        return res.render("", {
-          errors: validationResults.mapped(),
-          css: "",
-          title: "",
-        });
-      } else {
-        let {} = req.body;
-      }
-    } catch (error) {}
+    let product = Product.findOne({
+      where: {
+        product_id: req.params.name,
+      },
+    });
+    res.render("", {
+      css: "",
+      title: "",
+    });
   },
   productDelete: async (req, res) => {
-    let validationResults = validationResult(req);
+    let { name } = req.params;
     try {
-      if (validationResults.errors.length > 0) {
-        return res.render("", {
-          errors: validationResults.mapped(),
-          css: "",
-          title: "",
-        });
-      } else {
-        let {} = req.body;
-      }
-    } catch (error) {}
+      Product.update(
+        {
+          updated_at: formattedDateDb,
+          deleted: 0,
+        },
+        {
+          where: { name: name },
+        }
+      );
+      res.redirect("/store");
+    } catch (error) {
+      console.log(error);
+      res.redirect(`/store/${name}`);
+    }
   },
-  productFind: async (req, res) => {
-    let validationResults = validationResult(req);
+  productSearch: async (req, res) => {
     try {
-      if (validationResults.errors.length > 0) {
-        return res.render("", {
-          errors: validationResults.mapped(),
-          css: "",
-          title: "",
-        });
-      } else {
-        let {} = req.body;
-      }
-    } catch (error) {}
+      let productName = req.query.search || undefined;
+
+      let products = await Product.query();
+
+      res.render("products/store", {
+        title: `Resultados para ${search}`,
+        products: products,
+      });
+    } catch (error) {
+      res.render("products/store", {
+        title: `Resultados - !`,
+        error: error,
+      });
+    }
   },
   universeList: async (req, res) => {
     let validationResults = validationResult(req);
@@ -181,33 +184,72 @@ const controller = {
       });
     }
   },
-  universeOne: async (req, res) => {
-    let validationResults = validationResult(req);
-    try {
-      if (validationResults.errors.length > 0) {
-        return res.render("", {
-          errors: validationResults.mapped(),
-          css: "",
-          title: "",
-        });
-      } else {
-        let {} = req.body;
-      }
-    } catch (error) {}
-  },
   universeCreate: async (req, res) => {
+    res.render("products/universeCreate", {
+      title: "Crea un universo",
+      css: "forms",
+      css2: "stylesForms",
+    });
+  },
+  universeCreated: async (req, res) => {
     let validationResults = validationResult(req);
     try {
       if (validationResults.errors.length > 0) {
-        return res.render("", {
+        return res.render("products/universeCreate", {
           errors: validationResults.mapped(),
-          css: "",
-          title: "",
+          css: "stylesForms",
+          css2: "forms",
+          title: "Error en la creación",
         });
       } else {
-        let {} = req.body;
+        let { universe } = req.body;
+        await Universe.create({
+          universe: universe,
+        });
+        res.redirect("/store/universe");
       }
-    } catch (error) {}
+    } catch (error) {
+      consoleLogError(error);
+      res.redirect("/");
+    }
+  },
+  universeOne: async (req, res) => {
+    try {
+      let { universe } = req.params;
+      let getId = await Universe.findOne({
+        where: {
+          universe: universe,
+        },
+      });
+      if (getId != undefined) {
+        let products = await Product.findAll({
+          where: { universe_id: getId.universe_id },
+        });
+        if (!products) {
+          res.render("products/store.ejs", {
+            css: "stylesHome",
+            title: `Universo ${universe}`,
+            errors: {
+              notFound: { msg: "No se encontraron productos" },
+            },
+          });
+        } else {
+          res.render("products/store.ejs", {
+            css: "stylesHome",
+            title: `Universo ${universe}`,
+            products,
+          });
+        }
+      } else {
+        res.render("products/store.ejs", {
+          css: "stylesHome",
+          title: `Universo ${universe}`,
+        });
+      }
+    } catch (error) {
+      consoleLogError(error);
+      res.redirect("/");
+    }
   },
 };
 

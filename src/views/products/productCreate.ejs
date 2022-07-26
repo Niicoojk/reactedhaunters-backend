@@ -107,7 +107,9 @@
           </select>
 
           <% if (locals.errors && errors.tier) { %>
-            <%= errors.tier.msg %> 
+            <span>
+              <%= errors.tier.msg %> 
+            </span>
           <% } %> 
 
         </div>
@@ -126,7 +128,9 @@
           </select>
 
           <% if (locals.errors && errors.universe) { %>
-            <%= errors.universe.msg %> 
+            <span>
+              <%= errors.universe.msg %> 
+            </span>
           <% } %> 
 
         </div>

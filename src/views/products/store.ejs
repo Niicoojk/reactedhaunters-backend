@@ -5,7 +5,8 @@
     <div class="product-section-title">
       <h2>Lista de productos</h2>
     </div>
-    <% for (let product of products) {%>
+
+    <% if (locals.products) { %> <% for (let product of products) {%>
 
     <div class="containerProduct">
       <a href="/store/productDetails/<%=product.id%>">
@@ -25,6 +26,11 @@
       </a>
     </div>
 
+    <% } %> 
+    <% } else if (locals.errors && errors.notFound) { %>
+      <p><%= errors.notFound.msg %></p>
+    <% } else { %>
+      <p>Ups! No se encontraron productos.</p>
     <% } %>
   </section>
 </main>

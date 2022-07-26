@@ -12,18 +12,18 @@ const validationUpdate = require("../../middlewares/validations/user/update");
 const guestHandler = require("../../middlewares/handlers/guestHandler");
 const loggedHandler = require("../../middlewares/handlers/loggedHandler");
 
-const formattedDate = require("../../scripts/formattedDate");
+const formattedDate = require("../../middlewares/other/formattedDate");
 
 // Setting Multer
 const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, path.join(__dirname, "/../../../public/images/avatars"));
-	},
-	filename: (req, file, cb) => {
-		const multerFileName = `${formattedDate}-${file.originalname}`;
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "/../../../public/images/avatars"));
+  },
+  filename: (req, file, cb) => {
+    const multerFileName = `${formattedDate}-${file.originalname}`;
 
-		cb(null, multerFileName);
-	},
+    cb(null, multerFileName);
+  },
 });
 
 // Router
